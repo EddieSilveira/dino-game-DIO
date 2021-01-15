@@ -18,9 +18,15 @@ function jump(){
     if(position >= 150) {
       clearInterval(upInterval);
 
-      let domInterval = setInterval(() => {
+      let downInterval = setInterval(() => {
         if(position <= 0){
-          clearInterval(domInterval);
+          clearInterval(downInterval);
+          if(alive !== false){
+            const countTimeout = setTimeout(() => countPoints(), 1000);
+            if(count === null || alive === false) {
+            clearTimeout(countTimeout);
+            }
+          }
         }else{
           position -= 20;
           dino.style.bottom = position + 'px';
@@ -58,16 +64,14 @@ function createCactus(){
   }, 20);
 
   setTimeout(createCactus, randomTime);
-  const countTimeout = setTimeout(() => countPoints(), 1000);
-  if(count == null || alive == false) {
-    clearTimeout(countTimeout);
-  }
 }
 
 function countPoints(){
   const countScore = document.querySelector('.count-points');
   count++;
-  countScore.innerText = count; 
+  if(typeof(count) === 'number'){
+    countScore.innerText = count;
+  }
 } 
 
 createCactus();
